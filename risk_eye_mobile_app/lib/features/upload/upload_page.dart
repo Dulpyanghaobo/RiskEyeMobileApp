@@ -1,36 +1,45 @@
 import 'package:flutter/material.dart';
-import '../../widgets/app_bar.dart';
-import '../../widgets/uploader_tile.dart';
-import '../../widgets/buttons.dart';
-import '../evaluating/evaluating_page.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+
+import '../../viewmodels/upload_view_model.dart';
 
 class UploadPage extends StatelessWidget {
   const UploadPage({super.key});
 
-  static const String routeName = '/upload';
-
   @override
   Widget build(BuildContext context) {
+    final vm = context.watch<UploadViewModel>();
     return Scaffold(
-      appBar: const RiskAppBar(title: '上传资料'),
-      body: GridView.count(
+      appBar: AppBar(title: const Text('上传资料')),
+      body: Padding(
         padding: const EdgeInsets.all(16),
-        crossAxisCount: 2,
-        childAspectRatio: 1.2,
-        children: const [
-          UploaderTile(icon: Icons.credit_card, title: '身份证', status: '未上传'),
-          UploaderTile(icon: Icons.account_balance, title: '银行流水', status: '未上传'),
-          UploaderTile(icon: Icons.home, title: '房产证', status: '未上传'),
-          UploaderTile(icon: Icons.insert_drive_file, title: '其他证明', status: '未上传'),
-        ],
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16),
-        child: PrimaryButton(
-          label: '开始风险评估',
-          onPressed: () {
-            Navigator.pushNamed(context, EvaluatingPage.routeName);
-          },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () => context
+                      .read<UploadViewModel>()
+                      .pickAndUpload(ImageSource.camera, type: 'id'),
+                  child: const Text('拍照上传'),
+                ),
+                ElevatedButton(
+                  onPressed: () => context
+                      .read<UploadViewModel>()
+                      .pickAndUpload(ImageSource.gallery, type: 'id'),
+                  child: const Text('相册选择上传'),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            if (vm.uploading) LinearProgressIndicator(value: vm.progress),
+            if (vm.result != null) Text('上传成功: ${vm.result!.url}'),
+            if (vm.error != null)
+              Text(vm.error!, style: const TextStyle(color: Colors.red)),
+          ],
         ),
       ),
     );
