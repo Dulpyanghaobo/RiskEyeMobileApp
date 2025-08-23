@@ -1,0 +1,113 @@
+# ========== OS ==========
+.DS_Store
+Thumbs.db
+
+# ========== IDE ==========
+.vscode/
+.idea/
+*.iml
+
+# ========== Flutter / Dart ==========
+.dart_tool/
+.packages
+.pub/
+# 如果仓库里有本地的 pub 缓存目录再打开下一行
+# .pub-cache/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# 生成的 API 文档
+doc/api/
+
+# ========== Builds / Logs ==========
+build/
+**/build/
+coverage/
+*.log
+
+# ========== Android ==========
+android/.gradle/
+android/local.properties
+android/**/captures/
+android/**/generated/
+android/app/**/outputs/
+android/app/**/release/
+android/app/**/debug/
+*.apk
+*.aab
+
+# 签名与密钥
+**/*.keystore
+**/*.jks
+android/key.properties
+
+# 可选：Google/Firebase 配置（若需入库请移除忽略）
+android/app/google-services.json
+
+# ========== iOS ==========
+ios/Flutter/.last_build_id
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/ephemeral/
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/Debug.xcconfig
+ios/Flutter/Release.xcconfig
+ios/Flutter/App.framework
+ios/Flutter/Flutter.framework
+
+# Xcode 暂存
+**/*.xcuserstate
+**/*.xcworkspace/xcuserdata
+**/DerivedData/
+
+# 生成代码（保持忽略）
+ios/Runner/GeneratedPluginRegistrant.*
+
+# 可选：如果不想锁定 CocoaPods 版本，取消下一行注释
+# ios/Podfile.lock
+
+# Firebase（可选：若需入库请移除忽略）
+ios/Runner/GoogleService-Info.plist
+macos/Runner/GoogleService-Info.plist
+
+# ========== macOS ==========
+macos/Pods/
+macos/.symlinks/
+macos/Flutter/ephemeral/
+macos/Flutter/GeneratedPluginRegistrant.*
+macos/Flutter/Generated.xcconfig
+macos/**/xcuserdata
+macos/**/DerivedData/
+
+# ========== Windows ==========
+windows/flutter/ephemeral/
+windows/runner/GeneratedPluginRegistrant.*
+# Visual Studio
+**/.vs/
+
+# ========== Linux ==========
+linux/flutter/ephemeral/
+linux/runner/GeneratedPluginRegistrant.*
+
+# ========== Web ==========
+# Web 端生成的插件注册文件
+lib/generated_plugin_registrant.dart
+
+# ========== Fastlane / Crashlytics（可选）==========
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+**/crashlytics-build.properties
+**/*.dSYM.zip
+**/*.symbols
+*.ipa
+*.xcarchive
+
+# ========== 其他可选的配置/密钥（按需）==========
+*.env
+*.env.*
+*.keys
+firebase.json
+.firebaserc
