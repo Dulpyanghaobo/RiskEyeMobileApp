@@ -22,19 +22,19 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       onGenerateRoute: AppRouter.onGenerateRoute,
-      home: const _RootNavigation(),
+      home: const RootNavigation(),
     );
   }
 }
 
-class _RootNavigation extends StatefulWidget {
-  const _RootNavigation();
+class RootNavigation extends StatefulWidget {
+  const RootNavigation();
 
   @override
-  State<_RootNavigation> createState() => _RootNavigationState();
+  State<RootNavigation> createState() => _RootNavigationState();
 }
 
-class _RootNavigationState extends State<_RootNavigation> {
+class _RootNavigationState extends State<RootNavigation> {
   int _index = 0;
 
   Widget _buildBody() {

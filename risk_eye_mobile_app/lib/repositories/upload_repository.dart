@@ -25,7 +25,7 @@ class UploadRepository {
         quality: 80,
       );
       if (compressed != null) {
-        uploadFile = compressed;
+        uploadFile = File(compressed.path);
       }
     }
 
