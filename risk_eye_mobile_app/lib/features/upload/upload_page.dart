@@ -7,6 +7,8 @@ import '../../viewmodels/upload_view_model.dart';
 class UploadPage extends StatelessWidget {
   const UploadPage({super.key});
 
+  static const routeName = '/upload';
+
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<UploadViewModel>();

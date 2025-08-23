@@ -22,7 +22,6 @@ class TokenInterceptor extends Interceptor {
 class ErrorInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    err.error = AppException.fromDio(err);
-    handler.next(err);
+    handler.next(err.copyWith(error: AppException.fromDio(err)));
   }
 }
