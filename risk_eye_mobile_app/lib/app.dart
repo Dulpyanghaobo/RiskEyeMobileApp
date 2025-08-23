@@ -5,7 +5,6 @@ import 'theme/colors.dart';
 import 'theme/typography.dart';
 import 'features/home/home_page.dart';
 import 'features/history/history_page.dart';
-import 'features/evaluating/evaluating_page.dart';
 import 'features/settings/settings_page.dart';
 
 /// Root application widget with bottom navigation.
@@ -38,41 +37,31 @@ class _RootNavigation extends StatefulWidget {
 class _RootNavigationState extends State<_RootNavigation> {
   int _index = 0;
 
-  final _pages = const [
-    HomePage(),
-    HistoryPage(),
-    EvaluatingPage(),
-    SettingsPage(),
-  ];
+  Widget _buildBody() {
+    switch (_index) {
+      case 0:
+        return const HomePage();
+      case 1:
+        return const HistoryPage();
+      case 3:
+        return const SettingsPage();
+      default:
+        return const SizedBox.shrink();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _index,
-        children: _pages,
-      ),
+      body: _buildBody(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _index,
         selectedItemColor: primaryColor,
         onTap: (i) => setState(() => _index = i),
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '首页',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: '记录',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assessment),
-            label: '评估',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: '设置',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: '首页'),
+          BottomNavigationBarItem(icon: Icon(Icons.history), label: '记录'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: '设置'),
         ],
       ),
     );
