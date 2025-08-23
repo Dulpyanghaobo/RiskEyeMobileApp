@@ -42,7 +42,9 @@ class UploadRepository {
       );
       return UploadResult.fromJson(res.data as Map<String, dynamic>);
     } on DioException catch (e) {
-      throw e.error is AppException ? e.error : AppException.fromDio(e);
+      throw e.error is AppException
+          ? e.error as AppException
+          : AppException.fromDio(e);
     }
   }
 }

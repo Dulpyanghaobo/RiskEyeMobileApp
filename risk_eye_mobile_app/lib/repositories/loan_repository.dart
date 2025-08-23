@@ -14,7 +14,9 @@ class LoanRepository {
           .get('/loan/score/latest', queryParameters: {'userId': userId});
       return LoanScore.fromJson(res.data as Map<String, dynamic>);
     } on DioException catch (e) {
-      throw e.error is AppException ? e.error : AppException.fromDio(e);
+      throw e.error is AppException
+          ? e.error as AppException
+          : AppException.fromDio(e);
     }
   }
 
@@ -24,7 +26,9 @@ class LoanRepository {
           .post('/loan/score/trigger', data: {'userId': userId});
       return LoanScore.fromJson(res.data as Map<String, dynamic>);
     } on DioException catch (e) {
-      throw e.error is AppException ? e.error : AppException.fromDio(e);
+      throw e.error is AppException
+          ? e.error as AppException
+          : AppException.fromDio(e);
     }
   }
 }
