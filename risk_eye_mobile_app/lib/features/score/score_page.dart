@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../viewmodels/loan_view_model.dart';
@@ -12,7 +11,7 @@ class ScorePage extends StatelessWidget {
     final vm = context.watch<LoanViewModel>();
     final score = vm.score;
     return Scaffold(
-      appBar: AppBar(title: const Text('评分结果')),
+      appBar: AppBar(title: const Text('评分示例')),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -23,7 +22,7 @@ class ScorePage extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () => context
                       .read<LoanViewModel>()
-                      .fetchLatestScore('user123'),
+                      .getLatestScore('user123'),
                   child: const Text('获取最近评分'),
                 ),
                 const SizedBox(width: 16),
@@ -36,16 +35,13 @@ class ScorePage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            if (vm.loading) const Center(child: CircularProgressIndicator()),
+            if (vm.loading) const CircularProgressIndicator(),
             if (score != null) ...[
               Text('Score: ${score.score}'),
-              Text('Decision: ${score.decision.name}'),
-              Text('ModelVersion: ${score.modelVersion}'),
-              Text('ReasonCodes: ${score.reasonCodes.join(', ')}'),
-              Text('Time: ${DateFormat.yMd().add_jm().format(score.createdAt)}'),
+              Text('Grade: ${score.grade}'),
             ],
-            if (vm.error != null)
-              Text(vm.error!, style: const TextStyle(color: Colors.red)),
+            if (vm.errorMsg != null)
+              Text(vm.errorMsg!, style: const TextStyle(color: Colors.red)),
           ],
         ),
       ),

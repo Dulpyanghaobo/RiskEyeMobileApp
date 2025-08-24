@@ -1,50 +1,28 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 
+import '../core/network/api_result.dart';
 import '../core/network/dio_client.dart';
-import '../core/error/app_exception.dart';
-import '../models/upload_result.dart';
+import '../models/file_upload_resp.dart';
+import '../services/image_compress_service.dart';
 
 class UploadRepository {
   final DioClient _client;
-  UploadRepository(this._client);
+  final ImageCompressService _compress;
 
-  Future<UploadResult> uploadDocument(
+  UploadRepository(this._client, this._compress);
+
+  Future<ApiResult<FileUploadResp>> uploadDoc(
     File file, {
-    required String type,
     ProgressCallback? onSendProgress,
   }) async {
-    File uploadFile = file;
-    if (file.lengthSync() > 1024 * 1024) {
-      final targetPath = '${file.path}_compressed.jpg';
-      final compressed = await FlutterImageCompress.compressAndGetFile(
-        file.absolute.path,
-        targetPath,
-        quality: 80,
-      );
-      if (compressed != null) {
-        uploadFile = File(compressed.path);
-      }
-    }
-
-    final formData = FormData.fromMap({
-      'type': type,
-      'file': await MultipartFile.fromFile(uploadFile.path),
-    });
-
-    try {
-      final res = await _client.client.post(
-        '/upload',
-        data: formData,
-        onSendProgress: onSendProgress,
-      );
-      return UploadResult.fromJson(res.data as Map<String, dynamic>);
-    } on DioException catch (e) {
-      throw e.error is AppException
-          ? e.error as AppException
-          : AppException.fromDio(e);
-    }
+    final compressed = await _compress.compress(file);
+    return _client.upload<FileUploadResp>(
+      '/upload',
+      file: compressed,
+      onSendProgress: onSendProgress,
+      parser: (json) => FileUploadResp.fromJson(json as Map<String, dynamic>),
+    );
   }
 }
