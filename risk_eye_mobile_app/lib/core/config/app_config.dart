@@ -1,4 +1,3 @@
-
 /// Available application environments.
 enum AppEnv { dev, staging, prod }
 
@@ -30,18 +29,18 @@ class AppConfig {
     switch (_env) {
       case AppEnv.staging:
         return const AppConfig(
-          baseUrl: 'https://staging.example.com',
+          baseUrl: 'http://localhost:8080',
           enableLog: true,
         );
       case AppEnv.prod:
         return const AppConfig(
-          baseUrl: 'https://api.example.com',
+          baseUrl: 'http://localhost:8080',
           enableLog: false,
         );
       case AppEnv.dev:
       default:
         return const AppConfig(
-          baseUrl: 'https://dev.example.com',
+          baseUrl: 'http://localhost:8080',
           enableLog: true,
         );
     }

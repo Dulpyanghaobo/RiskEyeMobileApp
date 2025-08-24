@@ -1,4 +1,5 @@
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/network/dio_client.dart';
@@ -33,8 +34,6 @@ Future<List<SingleChildWidget>> createProviders() async {
         picker: ImagePickerService(),
       ),
     ),
-    ChangeNotifierProvider(
-      create: (_) => LoanViewModel(LoanRepository(dio)),
-    ),
+    ChangeNotifierProvider(create: (_) => LoanViewModel(LoanRepository(dio))),
   ];
 }

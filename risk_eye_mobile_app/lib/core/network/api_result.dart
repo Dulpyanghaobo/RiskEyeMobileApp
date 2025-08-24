@@ -14,7 +14,10 @@ class ApiResult<T> {
   static ApiResult<T> failure<T>(AppException error) =>
       ApiResult._(error: error);
 
-  R when<R>({required R Function(T data) success, required R Function(AppException e) failure}) {
+  R when<R>({
+    required R Function(T data) success,
+    required R Function(AppException e) failure,
+  }) {
     if (isSuccess) {
       return success(data as T);
     }

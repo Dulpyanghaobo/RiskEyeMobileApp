@@ -36,35 +36,35 @@ class AppException implements Exception {
 
 class NetworkException extends AppException {
   const NetworkException(String message, {int? code, dynamic raw})
-      : super(message, code: code, raw: raw);
+    : super(message, code: code, raw: raw);
 }
 
 class ServerException extends AppException {
   const ServerException(String message, {int? code, dynamic raw})
-      : super(message, code: code, raw: raw);
+    : super(message, code: code, raw: raw);
 }
 
 class AuthException extends AppException {
   const AuthException(String message, {int? code, dynamic raw})
-      : super(message, code: code, raw: raw);
+    : super(message, code: code, raw: raw);
 }
 
 class TimeoutException extends AppException {
   const TimeoutException(String message, {int? code, dynamic raw})
-      : super(message, code: code, raw: raw);
+    : super(message, code: code, raw: raw);
 }
 
 class CancelException extends AppException {
   const CancelException(String message, {int? code, dynamic raw})
-      : super(message, code: code, raw: raw);
+    : super(message, code: code, raw: raw);
 }
 
 class ParseException extends AppException {
   const ParseException(String message, {int? code, dynamic raw})
-      : super(message, code: code, raw: raw);
+    : super(message, code: code, raw: raw);
 }
 
 class UnknownException extends AppException {
   const UnknownException(String message, {int? code, dynamic raw})
-      : super(message, code: code, raw: raw);
+    : super(message, code: code, raw: raw);
 }
