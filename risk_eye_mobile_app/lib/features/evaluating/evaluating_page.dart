@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/app_bar.dart';
+import '../../services/analytics_service.dart';
+import '../../state/providers.dart';
 import '../result/result_page.dart';
 
 class EvaluatingPage extends StatefulWidget {
@@ -15,7 +17,10 @@ class _EvaluatingPageState extends State<EvaluatingPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
+    AnalyticsService.logEvent('evaluate_start');
+    Future.delayed(const Duration(seconds: 2), () async {
+      await appState.startEvaluation();
+      AnalyticsService.logEvent('evaluate_done');
       if (mounted) {
         Navigator.pushReplacementNamed(context, ResultPage.routeName);
       }

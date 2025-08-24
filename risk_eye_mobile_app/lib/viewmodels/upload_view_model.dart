@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../core/error/app_exception.dart';
 import '../models/upload_result.dart';
 import '../repositories/upload_repository.dart';
+import '../services/analytics_service.dart';
 
 class UploadViewModel extends ChangeNotifier {
   final UploadRepository repository;
@@ -41,12 +42,15 @@ class UploadViewModel extends ChangeNotifier {
       );
       error = null;
       Fluttertoast.showToast(msg: '上传成功');
+      AnalyticsService.logEvent('upload_success');
     } on AppException catch (e) {
       error = e.message;
       Fluttertoast.showToast(msg: e.message);
+      AnalyticsService.logEvent('error_upload_fail');
     } catch (e) {
       error = e.toString();
       Fluttertoast.showToast(msg: error!);
+      AnalyticsService.logEvent('error_upload_fail');
     } finally {
       uploading = false;
       notifyListeners();
