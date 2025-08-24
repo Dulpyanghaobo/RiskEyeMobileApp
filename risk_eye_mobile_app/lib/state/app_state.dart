@@ -17,6 +17,9 @@ class AppState extends ChangeNotifier {
   List<HistoryItem> _history = [];
   List<HistoryItem> get history => _history;
 
+  ScoreResult? _lastResult;
+  ScoreResult? get lastResult => _lastResult;
+
   Future<void> loadHistory() async {
     _history = await _storage.loadHistory();
     notifyListeners();
@@ -24,6 +27,7 @@ class AppState extends ChangeNotifier {
 
   Future<ScoreResult> startEvaluation() async {
     final result = await _engine.evaluate();
+    _lastResult = result;
     final item = HistoryItem(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       createdAt: DateTime.now(),
