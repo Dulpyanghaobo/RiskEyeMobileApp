@@ -6,6 +6,8 @@ import '../result/result_page.dart';
 class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
 
+  static const String routeName = '/history';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
