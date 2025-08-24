@@ -1,54 +1,52 @@
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/foundation.dart';
 
-import '../core/error/app_exception.dart';
-import '../models/loan_score.dart';
+import '../models/score_resp.dart';
 import '../repositories/loan_repository.dart';
+import '../services/toast_service.dart';
 
 class LoanViewModel extends ChangeNotifier {
   final LoanRepository repository;
 
   bool loading = false;
-  LoanScore? score;
-  String? error;
+  String? errorMsg;
+  ScoreResp? score;
 
   LoanViewModel(this.repository);
 
-  Future<void> fetchLatestScore(String userId) async {
+  Future<void> getLatestScore(String userId) async {
     loading = true;
     notifyListeners();
-    try {
-      score = await repository.getLatestScore(userId);
-      error = null;
-    } catch (e) {
-      error = _mapError(e);
-      Fluttertoast.showToast(msg: error!);
-    } finally {
-      loading = false;
-      notifyListeners();
-    }
+    final result = await repository.getLatestScore(userId);
+    result.when(
+      success: (data) {
+        score = data;
+        errorMsg = null;
+      },
+      failure: (e) {
+        errorMsg = e.message;
+        ToastService.showToast(e.message);
+      },
+    );
+    loading = false;
+    notifyListeners();
   }
 
   Future<void> triggerScore(String userId) async {
     loading = true;
     notifyListeners();
-    try {
-      score = await repository.triggerScore(userId);
-      error = null;
-      Fluttertoast.showToast(msg: '评分成功');
-    } catch (e) {
-      error = _mapError(e);
-      Fluttertoast.showToast(msg: error!);
-    } finally {
-      loading = false;
-      notifyListeners();
-    }
-  }
-
-  String _mapError(Object e) {
-    if (e is AppException) {
-      return e.message;
-    }
-    return '未知错误';
+    final result = await repository.triggerScore(userId);
+    result.when(
+      success: (data) {
+        score = data;
+        errorMsg = null;
+        ToastService.showToast('评分成功');
+      },
+      failure: (e) {
+        errorMsg = e.message;
+        ToastService.showToast(e.message);
+      },
+    );
+    loading = false;
+    notifyListeners();
   }
 }

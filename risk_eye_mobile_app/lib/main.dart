@@ -1,39 +1,32 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/single_child_widget.dart';
 
-import 'app.dart'; // 引入主题/路由以及 RootNavigation
-import 'core/network/dio_client.dart';
-import 'repositories/loan_repository.dart';
-import 'repositories/upload_repository.dart';
-import 'viewmodels/loan_view_model.dart';
-import 'viewmodels/upload_view_model.dart';
+import 'app.dart';
+import 'core/config/app_config.dart';
 import 'router.dart';
 import 'theme/colors.dart';
 import 'theme/typography.dart';
+import 'services/analytics_service.dart';
+import 'state/providers.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final prefs = await SharedPreferences.getInstance();
-  final dio = DioClient(prefs);
-  runApp(RootApp(dio));
+  debugPrint('Running env: ${AppConfig.env}');
+  await AnalyticsService.init();
+  final providers = await createProviders();
+  runApp(RootApp(providers));
 }
 
 class RootApp extends StatelessWidget {
-  final DioClient dio;
-  const RootApp(this.dio, {super.key});
+  final List<SingleChildWidget> providers;
+  const RootApp(this.providers, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => LoanViewModel(LoanRepository(dio)),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => UploadViewModel(UploadRepository(dio)),
-        ),
-      ],
+      providers: providers,
       child: MaterialApp(
         title: 'Risk Eye',
         theme: ThemeData(
@@ -43,7 +36,7 @@ class RootApp extends StatelessWidget {
           useMaterial3: true,
         ),
         onGenerateRoute: AppRouter.onGenerateRoute,
-        home: const RootNavigation(), // ← 用回 app.dart 的底部导航（含 HomePage）
+        home: const RootNavigation(),
       ),
     );
   }
