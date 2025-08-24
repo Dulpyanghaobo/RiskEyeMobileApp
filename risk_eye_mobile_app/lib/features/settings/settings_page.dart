@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:risk_eye_mobile_app/models/export_format.dart';
 import '../../widgets/app_bar.dart';
 import '../../widgets/cards.dart';
 import '../../state/providers.dart';
@@ -18,10 +19,7 @@ class SettingsPage extends StatelessWidget {
           return ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              const ListItemCard(
-                icon: Icons.folder,
-                title: '存储路径',
-              ),
+              const ListItemCard(icon: Icons.folder, title: '存储路径'),
               ListItemCard(
                 icon: Icons.picture_as_pdf,
                 title: '导出格式',
@@ -29,15 +27,11 @@ class SettingsPage extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (_) => const ExportFormatPage()),
+                    MaterialPageRoute(builder: (_) => const ExportFormatPage()),
                   );
                 },
               ),
-              const ListItemCard(
-                icon: Icons.lock,
-                title: '本地加密',
-              ),
+              const ListItemCard(icon: Icons.lock, title: '本地加密'),
               ListItemCard(
                 icon: Icons.info,
                 title: '关于',

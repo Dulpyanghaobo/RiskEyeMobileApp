@@ -43,7 +43,7 @@ class _RootNavigationState extends State<RootNavigation> {
         return const HomePage();
       case 1:
         return const HistoryPage();
-      case 3:
+      case 2:
         return const SettingsPage();
       default:
         return const SizedBox.shrink();
